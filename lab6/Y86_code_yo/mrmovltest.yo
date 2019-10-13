@@ -1,0 +1,72 @@
+                      | #Execution begins at address 0
+  0x000:              |         .pos 0
+  0x000: 30f400010000 | init:   irmovl Stack,%esp    #Set up stack pointer
+  0x006: 30f500010000 |         irmovl Stack,%ebp    #Set up base pointer
+  0x00c: 802c000000   |         call Main            #Execute main program
+  0x011: 00           |         halt                 #Terminate program
+                      | 
+                      | # linked list
+  0x014: 0000         | .align 4
+  0x014:              | ele1:
+  0x014: 0f000000     |         .long 0x00f
+  0x018: 1c000000     |         .long ele2
+  0x01c:              | ele2: 
+  0x01c: e0000000     |         .long 0x0e0
+  0x020: 24000000     |         .long ele3
+  0x024:              | ele3:
+  0x024: 000d0000     |         .long 0xd00
+  0x028: 00000000     |         .long 0
+  0x02c:              | Main:   
+  0x02c: a05f         |         pushl %ebp
+  0x02e: 2045         |         rrmovl %esp,%ebp
+  0x030: 30f214000000 |         irmovl ele1, %edx
+  0x036: a02f         |         pushl %edx
+  0x038: 8042000000   |         call rxor_list
+  0x03d: 2054         |         rrmovl %ebp,%esp
+  0x03f: b05f         |         popl %ebp
+  0x041: 90           |         ret
+                      | 
+  0x042:              | rxor_list:
+  0x042: a05f         |         pushl %ebp		# Save %ebp
+  0x044: 2045         | 	rrmovl %esp,%ebp	# Set Frame ptr
+  0x046: 500508000000 | 	mrmovl 8(%ebp),%eax     
+  0x04c: 506000000000 |         mrmovl (%eax),%esi      # val = ele1
+  0x052: 502508000000 | 	mrmovl 8(%ebp),%edx
+  0x058: 6222         | 	andl %edx,%edx		# ls == 0?
+  0x05a: 7373000000   | 	je L4			# Yes, goto done
+  0x05f:              | L5:			# Loop:
+  0x05f: 502204000000 |         mrmovl 4(%edx),%edx	# ls = ls->next
+  0x065: a02f         |         pushl %edx              # save %edx
+  0x067: 807e000000   |         call rsum_list          # rsum_list(ls->next)
+  0x06c: 6360         | 	xorl %esi,%eax		# val ^ rest
+  0x06e: 2054         | 	rrmovl %ebp,%esp	# Restore %esp
+  0x070: b05f         | 	popl %ebp		# Restore %ebp
+  0x072: 90           | 	ret			# Return
+  0x073:              | L4:                     #Done:
+  0x073: 30f000000000 |         irmovl $0,%eax          # %eax=0
+  0x079: 2054         |         rrmovl %ebp,%esp	# Restore %esp
+  0x07b: b05f         | 	popl %ebp		# Restore %ebp
+  0x07d: 90           | 	ret			# Return
+                      | 
+  0x07e:              | rsum_list:
+  0x07e: a05f         | 	pushl %ebp		# Save %ebp
+  0x080: 2045         | 	rrmovl %esp,%ebp	# Set Frame ptr
+  0x082: a03f         | 	pushl %ebx		# Save %ebx
+  0x084: 500508000000 | 	mrmovl 8(%ebp),%eax	# Get ls
+  0x08a: 6200         | 	andl %eax,%eax		# ls == 0?
+  0x08c: 73ab000000   | 	je zreturn		# Yes, goto zreturn
+  0x091: 503000000000 | 	mrmovl (%eax),%ebx	# val = ls->val
+  0x097: 500004000000 | 	mrmovl 4(%eax),%eax	# nls = ls->next
+  0x09d: a00f         | 	pushl %eax		# push
+  0x09f: 807e000000   | 	call rsum_list		# rsum_list(nls)
+  0x0a4: 6030         | 	addl %ebx,%eax		# val+rest
+  0x0a6: 70ad000000   | 	jmp done		# Goto done
+  0x0ab:              | zreturn:
+  0x0ab: 6300         | 	xorl %eax,%eax		# val = 0
+  0x0ad:              | done:
+  0x0ad: 5035fcffffff | 	mrmovl -4(%ebp), %ebx	# restore %ebx
+  0x0b3: 2054         | 	rrmovl %ebp,%esp	# remove stack frame
+  0x0b5: b05f         | 	popl %ebp		# restore %ebp
+  0x0b7: 90           | 	ret			# return
+  0x100:              | .pos 0x100
+  0x100:              | Stack:
