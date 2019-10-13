@@ -1,0 +1,77 @@
+30 F4 00 01 00 00
+30 F5 00 01 00 00
+80 24 00 00 00
+00 00 00
+0D 00 00 00
+C0 00 00 00
+00 0B 00 00
+00 A0 00 00
+A0 5F
+20 45
+30 F0 04 00 00 00
+A0 0F
+30 F2 14 00 00 00
+A0 2F
+80 42 00 00 00
+20 54
+B0 5F
+90
+A0 5F
+20 45
+50 15 08 00 00 00
+50 25 0C 00 00 00
+63 00
+62 22
+73 78 00 00 00
+50 61 00 00 00 00
+60 60
+30 F3 04 00 00 00
+60 31
+30 F3 FF FF FF FF
+60 32
+74 5B 00 00 00
+20 54
+B0 5F
+90
+
+00 00 00 00 00
+//assembly code
+0x0	irmovl 0x100,%esp
+0x6	irmovl 0x100,%ebp
+0xc	call 0x24
+0x11	halt
+0x14	0xd
+0x18	0xc0
+0x1c	0xb00
+0x20	0xa000
+	
+0x24	push %ebp
+0x26	rrmovl %esp,%ebp
+0x28	irmovl 0x4,%eax
+0x2e	push %eax
+0x30	irmovl 0x14,%edx
+0x36	push %edx
+0x38	call 0x42
+0x3d	rrmovl %ebp,%esp
+0x3f	pop %ebp
+0x41	ret
+
+0x42	push %ebp
+0x44	rrmovl %esp,%ebp
+0x4a	mrmovl 0x8(%ebp),%ecx
+0x50	mrmovl 0xc(%ebp),%edx
+0x52	xorl %eax,%eax
+0x54	andl %edx,%edx
+0x56	je 0x78
+
+0x5b	mrmovl 0x0(%ecx),%esi
+0x61	addl %esi,%eax
+0x63	irmovl 0x4,%ebx
+0x69	addl %ebx,%ecx
+0x6b	irmovl 0xffffffff,%ebx
+0x71	addl %ebx,%edx
+
+0x73	jne 0x5b
+0x78	rrmovl %ebp,%esp
+0x7a	pop %ebp
+0x7b	ret

@@ -1,0 +1,13 @@
+30 f3 08 00 00 7f
+30 f1 02 00 00 7f
+60 13
+
+00 00 00 00 00
+//OF = 1, SF = 1
+irmovl 0x7f000008,%ebx
+irmovl 0x7f000002,%ecx
+addl %ecx,%ebx
+
+
+
+

@@ -1,0 +1,25 @@
+30 f3 15 00 00 00
+70 15 00 00 00
+20 00 00 00
+30 f2 20 00 00 00
+30 f1 02 00 00 00
+50 01 09 00 00 00
+60 30
+00
+
+
+00 00 00 00 00
+//assembly code
+	irmovl $21,%ebx
+	jmp go
+array:
+	.long $32
+	irmovl array,%edx
+go:
+	irmovl $2,%ecx
+
+	mrmovl 9(%ecx),%eax
+
+	addl %ebx,%eax
+
+	halt

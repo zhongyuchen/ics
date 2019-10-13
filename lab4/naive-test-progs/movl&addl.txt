@@ -1,0 +1,23 @@
+a0 5f
+20 45
+a0 3f
+a0 1f
+30 f3 08 00 00 00
+30 f1 02 00 00 00
+10
+10
+10
+60 13
+90
+
+
+00 00 00 00 00
+//assembly
+push %ebp
+rrmovl %esp£¬%ebp
+push %ebx
+push %ecx
+irmovl 0x8,%ebx
+irmovl 0x2,%ecx
+addl %ecx,%ebx
+ret

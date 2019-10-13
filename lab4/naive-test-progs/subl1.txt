@@ -1,0 +1,9 @@
+30 f3 02 53 76 09
+30 f1 01 92 73 04
+61 13
+
+00 00 00 00 00
+//normal subl
+irmovl 0x09765302,%ebx
+irmovl 0x04739201,%ecx
+subl %ecx,%ebx

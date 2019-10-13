@@ -1,0 +1,17 @@
+30 f4 64 00 00 00
+80 12 00 00 00
+30 f2 10 00 00 00
+00
+90
+20 23
+
+00 00 00 00 00
+//assembly
+irmovl $100,%esp
+call Proc
+irmovl $16,%edx
+halt
+
+Proc:
+ret
+rrmovl %edx,%ebx

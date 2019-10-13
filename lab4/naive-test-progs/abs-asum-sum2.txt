@@ -1,0 +1,16 @@
+30 F0 64 00 00 00
+30 F6 01 00 00 00
+
+60 02
+61 60
+74 0C 00 00 00
+
+00 00 00 00 00
+//assembly
+irmovl $100,%eax
+irmovl $1,%esi
+L1:
+addl %eax,%edx
+subl %esi,%eax
+jne L1
+halt

@@ -1,0 +1,20 @@
+30 f2 04 00 00 00
+62 22
+73 20 00 00 00
+30 f1 0f 00 00 00
+60 11
+00
+ab cd ed ef ef ef 12 34 56
+30 f1 11 00 00 00
+00
+
+
+00 00 00 00 00
+//assembly
+irmovl 0x4,%edx
+andl %edx,%edx
+je 0x20
+irmovl 0x0f,%ecx
+addl %ecx,%ecx
+halt
+irmovl 0x1,%ecx

@@ -1,0 +1,9 @@
+30 f3 08 00 00 00
+30 f1 02 00 00 00
+60 13
+
+00 00 00 00 00
+//normal addl
+irmovl 0x8,%ebx
+irmovl 0x2,%ecx
+addl %ecx,%ebx

@@ -1,0 +1,10 @@
+30 f3 0e 0f 0a 0f
+30 f1 f1 f0 f5 f0
+62 13
+	
+00 00 00 00 00
+//normal andl
+irmovl 0x0f0a0f0e,%ebx
+irmovl 0xf0f5f0f1,%ecx
+andl %ecx,%ebx
+
